@@ -21,6 +21,25 @@ from . import retinanet
 from . import Backbone
 import tensorflow.keras.applications.efficientnet as efn
 
+IMAGENET_WEIGHTS_PATH = 'https://storage.googleapis.com/keras-applications/'
+IMAGENET_WEIGHTS_HASHES = {
+    'b0': ('902e53a9f72be733fc0bcb005b3ebbac',
+           '50bc09e76180e00e4465e1a485ddc09d'),
+    'b1': ('1d254153d4ab51201f1646940f018540',
+           '74c4e6b3e1f6a1eea24c589628592432'),
+    'b2': ('b15cce36ff4dcbd00b6dd88e7857a6ad',
+           '111f8e2ac8aa800a7a99e3239f7bfb39'),
+    'b3': ('ffd1fdc53d0ce67064dc6a9c7960ede0',
+           'af6d107764bb5b1abb91932881670226'),
+    'b4': ('18c95ad55216b8f92d7e70b3a046e2fc',
+           'ebc24e6d6c33eaebbd558eafbeedf1ba'),
+    'b5': ('ace28f2a6363774853a83a0b21b9421a',
+           '38879255a25d3c92d5e44e04ae6cec6f'),
+    'b6': ('165f6e37dce68623721b423839de8be5',
+           '9ecce42647a20130c1f39a5d4cb75743'),
+    'b7': ('8c03f828fec3ef71311cd463b6759d99',
+           'cbcfe4450ddf6f3ad90b1b398090fe4a'),
+}
 
 class EfficientNetBackbone(Backbone):
     """ Describes backbone information and provides utility functions.
@@ -38,11 +57,8 @@ class EfficientNetBackbone(Backbone):
     def download_imagenet(self):
         """ Downloads ImageNet weights and returns path to weights file.
         """
-        from efficientnet.weights import IMAGENET_WEIGHTS_PATH
-        from efficientnet.weights import IMAGENET_WEIGHTS_HASHES
-
-        model_name = 'efficientnet-b' + self.backbone[-1]
-        file_name = model_name + '_weights_tf_dim_ordering_tf_kernels_autoaugment_notop.h5'
+        model_name = 'efficientnetb' + self.backbone[-1]
+        file_name = model_name + '_notop.h5'
         file_hash = IMAGENET_WEIGHTS_HASHES[model_name][1]
         weights_path = get_file(file_name, IMAGENET_WEIGHTS_PATH + file_name, cache_subdir='models', file_hash=file_hash)
         return weights_path
